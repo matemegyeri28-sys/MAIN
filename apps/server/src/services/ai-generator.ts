@@ -1,6 +1,5 @@
 import { randomUUID } from "crypto";
-import type { CreativeRequest } from "@main/shared";
-import type { ExtractedAsset } from "@prisma/client";
+import type { CreativeRequest, ExtractedAsset } from "@main/shared";
 
 const toneMatrix: Record<string, string[]> = {
   text: ["confident", "playful", "inspiring"],

@@ -18,7 +18,7 @@
     "@main/config": "file:../../packages/config",
     "@main/observability": "file:../../packages/observability",
     "@main/shared": "file:../../packages/shared",
-    "@prisma/client": "^5.13.0",
+    "@prisma/client": "file:../../packages/prisma-client",
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",

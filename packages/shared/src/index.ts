@@ -18,40 +18,53 @@ export const ExtractedAssetSchema = z.object({
   body: z.string(),
   images: z.array(z.string().url()).default([]),
   videos: z.array(z.string().url()).default([]),
-  tags: z.array(z.string()).default([])
+  tags: z.array(z.string()).default([]),
+  campaignId: z.string().optional(),
+  createdAt: z.coerce.date().optional()
 });
 
 export type ExtractedAsset = z.infer<typeof ExtractedAssetSchema>;
+
+export const CreativeTypeSchema = z.enum(["text", "image", "video"]);
+
+export type CreativeType = z.infer<typeof CreativeTypeSchema>;
 
 export const CreativeRequestSchema = z.object({
   workspaceId: z.string(),
   campaignId: z.string(),
   extractedAssetId: z.string(),
   userId: z.string(),
-  formats: z.array(z.enum(["text", "image", "video"])).default(["text", "image"])
+  formats: z.array(CreativeTypeSchema).default(["text", "image"])
 });
 
 export type CreativeRequest = z.infer<typeof CreativeRequestSchema>;
 
 export const GeneratedCreativeSchema = z.object({
   id: z.string(),
-  type: z.enum(["text", "image", "video"]),
+  type: CreativeTypeSchema,
   title: z.string(),
   content: z.string(),
   callToAction: z.string(),
   targetAudience: z.string().optional(),
-  tone: z.string().optional()
+  tone: z.string().optional(),
+  campaignId: z.string().optional(),
+  extractedAssetId: z.string().optional(),
+  createdAt: z.coerce.date().optional()
 });
 
 export type GeneratedCreative = z.infer<typeof GeneratedCreativeSchema>;
 
-export const SocialChannelSchema = z.enum([
+export const SocialProviderSchema = z.enum([
   "facebook",
   "instagram",
   "twitter",
   "linkedin",
   "tiktok"
 ]);
+
+export type SocialProvider = z.infer<typeof SocialProviderSchema>;
+
+export const SocialChannelSchema = SocialProviderSchema;
 
 export type SocialChannel = z.infer<typeof SocialChannelSchema>;
 
@@ -76,6 +89,14 @@ export const SubscriptionStatusSchema = z.enum([
 ]);
 
 export type SubscriptionStatus = z.infer<typeof SubscriptionStatusSchema>;
+
+export const MemberRoleSchema = z.enum(["owner", "admin", "member"]);
+
+export type MemberRole = z.infer<typeof MemberRoleSchema>;
+
+export const PostStatusSchema = z.enum(["pending", "published", "failed"]);
+
+export type PostStatus = z.infer<typeof PostStatusSchema>;
 
 export const ApiErrorSchema = z.object({
   message: z.string(),
