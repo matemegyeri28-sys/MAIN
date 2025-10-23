@@ -1,6 +1,16 @@
 import type { Config } from 'tailwindcss';
 
+const withOpacity = (variable: string) => {
+  return ({ opacityValue }: { opacityValue?: string }) => {
+    if (opacityValue) {
+      return `rgb(var(${variable}) / ${opacityValue})`;
+    }
+    return `rgb(var(${variable}))`;
+  };
+};
+
 const config: Config = {
+  darkMode: 'class',
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -10,12 +20,17 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          dark: '#0A101A',
-          DEFAULT: '#1F2A3D',
-          light: '#E7ECF8'
+          dark: withOpacity('--color-brand-dark'),
+          DEFAULT: withOpacity('--color-brand-base'),
+          light: withOpacity('--color-brand-light')
         },
-        accent: '#7C5CFF',
-        muted: '#7B8794'
+        accent: withOpacity('--color-accent'),
+        muted: withOpacity('--color-muted'),
+        surface: {
+          base: withOpacity('--surface-base'),
+          elevated: withOpacity('--surface-elevated'),
+          floating: withOpacity('--surface-floating')
+        }
       },
       fontFamily: {
         display: ['"DM Sans"', 'ui-sans-serif', 'system-ui'],

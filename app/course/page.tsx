@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { CheckoutButton } from '@/components/CheckoutButton';
 
 type Module = {
   title: string;
@@ -85,6 +86,19 @@ const modules: Module[] = [
 
 const pricingTiers = [
   {
+    name: 'Membership',
+    price: '$5 / month',
+    description: 'Full access to the learn library, live tools, and monthly regulation salons with our neuroscience team.',
+    features: [
+      'New ScienceBase articles every week with implementation blueprints',
+      'Unlimited use of interactive labs with saved progress',
+      'Monthly live salon with Q&A and guided nervous system resets',
+      'Foundations module from the flagship course + community prompts'
+    ],
+    cta: 'subscribe' as const,
+    badge: 'New – best for rapid wins'
+  },
+  {
     name: 'Self-paced',
     price: '$649',
     description: 'Complete curriculum with lifetime updates, lab library, and quarterly group clinics.',
@@ -93,7 +107,8 @@ const pricingTiers = [
       'Interactive lab bundle with dopamine & breathing tools',
       'Downloadable ScienceBase handbook (200+ pages)',
       'Quarterly live group clinic + Q&A replays'
-    ]
+    ],
+    badge: 'Lifetime access'
   },
   {
     name: 'Coaching cohort',
@@ -104,7 +119,8 @@ const pricingTiers = [
       'Personal nervous system audit & HRV interpretation',
       'Private Slack pod with daily coach feedback',
       'Priority support within 12 business hours'
-    ]
+    ],
+    badge: 'High-touch cohort'
   }
 ];
 
@@ -180,12 +196,17 @@ export default function CoursePage() {
               <li>• Translate evidence into team rituals, client programmes, or personal leadership cadences.</li>
             </ul>
           </div>
-          <Link
-            href="/contact"
-            className="focus-ring inline-flex w-full items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 sm:w-auto"
-          >
-            Secure checkout ↗
-          </Link>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <CheckoutButton className="sm:w-auto" analyticsLabel="course-hero">
+              Start your $5 membership
+            </CheckoutButton>
+            <Link
+              href="/contact"
+              className="focus-ring inline-flex items-center justify-center rounded-full border border-white/70 bg-white/70 px-6 py-3 text-sm font-semibold text-brand-dark transition hover:border-accent hover:text-accent dark:border-white/20 dark:bg-white/10"
+            >
+              Talk to our team
+            </Link>
+          </div>
         </header>
 
         <section className="section-padding">
@@ -248,18 +269,29 @@ export default function CoursePage() {
                       <h3 className="font-display text-2xl text-brand-dark">{tier.name}</h3>
                       <span className="text-3xl font-semibold text-brand">{tier.price}</span>
                     </div>
+                    {tier.badge && (
+                      <span className="mt-3 inline-flex items-center rounded-full border border-white/60 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.35em] text-brand-dark/70 dark:border-white/20 dark:bg-white/10">
+                        {tier.badge}
+                      </span>
+                    )}
                     <p className="mt-3 text-sm text-muted">{tier.description}</p>
                     <ul className="mt-4 space-y-2 text-sm text-muted">
                       {tier.features.map((feature) => (
                         <li key={feature}>• {feature}</li>
                       ))}
                     </ul>
-                    <Link
-                      href="/contact"
-                      className="focus-ring mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white"
-                    >
-                      Enroll now
-                    </Link>
+                    {tier.cta === 'subscribe' ? (
+                      <CheckoutButton className="mt-6" analyticsLabel="course-pricing">
+                        Join the membership
+                      </CheckoutButton>
+                    ) : (
+                      <Link
+                        href="/contact"
+                        className="focus-ring mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white"
+                      >
+                        Enroll now
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>

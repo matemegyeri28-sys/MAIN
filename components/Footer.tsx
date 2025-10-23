@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { site } from '@/data/site';
 
 const footerLinks = [
   {
@@ -34,21 +35,18 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="mt-28 bg-gradient-to-b from-transparent via-white/70 to-white/90">
+    <footer className="mt-28 bg-gradient-to-b from-transparent via-white/70 to-white/90 transition-colors dark:via-white/5 dark:to-white/10">
       <div className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-12 rounded-[32px] border border-white/60 bg-white/70 p-10 shadow-soft backdrop-blur-2xl md:grid-cols-4">
+        <div className="grid gap-12 rounded-[32px] border border-white/60 bg-white/70 p-10 shadow-soft backdrop-blur-2xl transition-colors dark:border-white/15 dark:bg-white/10 md:grid-cols-4">
           <div className="space-y-6">
-            <p className="font-display text-2xl font-semibold text-brand-dark md:text-3xl">&lt;Your Brand Here&gt;</p>
-            <p className="text-sm text-brand-dark/70">
-              Evidence-based guidance to help ambitious humans understand, regulate, and transform stress into sustainable
-              momentum.
-            </p>
+            <p className="font-display text-2xl font-semibold text-brand-dark md:text-3xl">{site.name}</p>
+            <p className="text-sm text-brand-dark/70">{site.description}</p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <Link
                   key={social.label}
                   href={social.href}
-                  className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/60 text-brand-dark transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                  className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/60 text-brand-dark transition hover:-translate-y-0.5 hover:border-accent hover:text-accent dark:border-white/20 dark:bg-white/10"
                 >
                   <span className="sr-only">{social.label}</span>
                   <span aria-hidden className="text-base font-semibold">●</span>
@@ -72,7 +70,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-12 flex flex-col gap-4 text-xs text-brand-dark/60 md:flex-row md:items-center md:justify-between">
-          <p>&copy; {new Date().getFullYear()} &lt;Your Brand Here&gt;. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
           <div className="flex flex-wrap gap-4">
             <Link href="#privacy" className="focus-ring hover:text-brand-dark">
               Privacy & data use

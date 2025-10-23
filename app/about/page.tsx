@@ -1,4 +1,5 @@
 import { references } from '@/data/references';
+import { site } from '@/data/site';
 
 const credibilityMarkers = [
   {
@@ -22,8 +23,8 @@ export default function AboutPage() {
         <header className="space-y-4">
           <h1 className="font-display text-4xl text-brand-dark">Our mission: make stress science usable.</h1>
           <p className="text-base text-muted">
-            &lt;Your Brand Here&gt; bridges the gap between neuroscience labs and real-life practice. We translate complex research
-            into stories, visuals, and rituals that help you build resilience.
+            {site.name} bridges the gap between neuroscience labs and real-life practice. We translate complex research into stories,
+            visuals, and rituals that help you build resilience.
           </p>
         </header>
 

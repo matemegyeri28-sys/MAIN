@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeToggle } from './ThemeToggle';
+import { site } from '@/data/site';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -19,7 +21,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/50 shadow-[0_15px_45px_rgba(10,16,26,0.08)] backdrop-blur-2xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/50 shadow-[0_15px_45px_rgba(10,16,26,0.08)] backdrop-blur-2xl transition-colors dark:border-white/10 dark:bg-surface-floating/50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link
           href="/"
@@ -27,10 +29,10 @@ export function Navbar() {
         >
           <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-accent via-accent/70 to-emerald-300 text-white shadow-glow">
             <span className="shine-line" aria-hidden />
-            <span className="font-display text-base font-bold">NB</span>
+            <span className="font-display text-base font-bold">{site.brandInitials}</span>
           </span>
           <span className="font-display text-xl md:text-2xl">
-            &lt;Your Brand Here&gt;
+            {site.name}
           </span>
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-10 md:flex">
@@ -56,9 +58,10 @@ export function Navbar() {
           })}
         </nav>
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <Link
             href="/course"
-            className="focus-ring inline-flex items-center justify-center rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-brand-dark transition hover:border-accent hover:text-accent"
+            className="focus-ring inline-flex items-center justify-center rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-brand-dark transition hover:border-accent hover:text-accent dark:border-white/20 dark:bg-white/10"
           >
             View course
           </Link>
@@ -72,7 +75,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-brand-dark md:hidden"
+          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-brand-dark transition dark:border-white/20 dark:bg-white/10 md:hidden"
           aria-expanded={isOpen}
           aria-label="Toggle navigation menu"
         >
@@ -104,15 +107,15 @@ export function Navbar() {
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="md:hidden"
           >
-            <ul className="space-y-1 border-t border-white/50 bg-white/70 px-6 py-4 text-sm backdrop-blur-2xl">
+            <ul className="space-y-1 border-t border-white/50 bg-white/70 px-6 py-4 text-sm backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
               {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     className={`block rounded-xl px-3 py-3 font-medium focus-ring ${
                       pathname === link.href
-                        ? 'bg-white/80 text-brand-dark shadow-soft'
-                        : 'text-muted hover:bg-white/80 hover:text-brand-dark'
+                        ? 'bg-white/80 text-brand-dark shadow-soft dark:bg-white/10'
+                        : 'text-muted hover:bg-white/80 hover:text-brand-dark dark:hover:bg-white/10'
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -120,6 +123,10 @@ export function Navbar() {
                   </Link>
                 </li>
               ))}
+              <li className="flex justify-between gap-3 px-3 py-3">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-muted">Mode</span>
+                <ThemeToggle className="h-10 w-10" />
+              </li>
               <li>
                 <Link
                   href="/course"

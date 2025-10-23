@@ -17,7 +17,7 @@ export function TestimonialSlider() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-white/90 p-8 shadow-soft">
+    <div className="relative overflow-hidden rounded-3xl bg-white/90 p-8 shadow-soft transition-colors dark:bg-white/10">
       <AnimatePresence mode="wait">
         <motion.blockquote
           key={testimonials[index].id}
@@ -44,7 +44,7 @@ export function TestimonialSlider() {
             aria-controls={`testimonial-${testimonial.id}`}
             onClick={() => setIndex(idx)}
             className={`h-2.5 flex-1 rounded-full transition ${
-              idx === index ? 'bg-accent' : 'bg-brand-light hover:bg-accent/50'
+              idx === index ? 'bg-accent' : 'bg-brand-light hover:bg-accent/50 dark:bg-white/15'
             }`}
           >
             <span className="sr-only">Show testimonial from {testimonial.name}</span>

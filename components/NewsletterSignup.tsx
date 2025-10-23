@@ -15,11 +15,11 @@ export function NewsletterSignup() {
 
   return (
     <section id="newsletter" className="section-padding">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] border border-white/70 bg-gradient-to-br from-white/90 via-white/70 to-white/60 p-12 shadow-soft backdrop-blur-2xl">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] border border-white/70 bg-gradient-to-br from-white/90 via-white/70 to-white/60 p-12 shadow-soft backdrop-blur-2xl transition-colors dark:border-white/15 dark:from-white/10 dark:via-white/5 dark:to-white/0">
         <div className="shine-line" aria-hidden />
         <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
           <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/60 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.4em] text-brand-dark/70">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/60 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:border-white/20 dark:bg-white/10">
               ScienceBase digest
             </span>
             <p className="font-display text-3xl font-semibold tracking-tight text-brand-dark md:text-4xl">
@@ -40,7 +40,7 @@ export function NewsletterSignup() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="focus-ring w-full rounded-2xl border border-white/70 bg-white/80 px-5 py-4 text-sm text-brand-dark placeholder:text-brand-dark/40"
+              className="focus-ring w-full rounded-2xl border border-white/70 bg-white/80 px-5 py-4 text-sm text-brand-dark placeholder:text-brand-dark/40 transition-colors dark:border-white/15 dark:bg-white/10"
             />
             <button
               type="submit"

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { NewsletterSignup } from '@/components/NewsletterSignup';
+import { site } from '@/data/site';
 
 const benefits = [
   {
@@ -99,7 +100,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.35 }}
               className="max-w-xl text-base text-brand-dark/70"
             >
-              &lt;Your Brand Here&gt; distils cutting-edge neurobiology, ScienceBase research, and cinematic storytelling into tools you can use immediately. Learn how dopamine, cortisol, and autonomic loops choreograph your days—and how to guide them with precision.
+              {site.name} distils cutting-edge neurobiology, ScienceBase research, and cinematic storytelling into tools you can use immediately. Learn how dopamine, cortisol, and autonomic loops choreograph your days—and how to guide them with precision.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

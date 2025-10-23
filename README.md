@@ -1,4 +1,4 @@
-# &lt;Your Brand Here&gt; · Neurobiology of Stress
+# NeuroLumen Atlas · Neurobiology of Stress
 
 A premium, production-ready Next.js experience teaching the science of stress, dopamine, and recovery. Built with accessibility, performance, and conversion best practices.
 
@@ -39,11 +39,24 @@ Deploy seamlessly to [Vercel](https://vercel.com/):
 4. Add any environment variables or analytics keys as needed.
 5. Trigger the first deployment—Vercel will manage previews, production, and edge caching.
 
+## 🔐 Environment variables
+Create an `.env.local` file (or configure variables in your hosting platform) with the following keys to enable secure Stripe-powered checkout:
+
+```
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_MONTHLY_PRICE_ID=price_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+NEXT_PUBLIC_SITE_URL=https://neurolumenatlas.example.com
+```
+
+- `STRIPE_MONTHLY_PRICE_ID` should reference a recurring Price object configured for `$5`/month.
+- `NEXT_PUBLIC_SITE_URL` is optional in development but keeps checkout redirects accurate in production.
+
 ## 🧰 Customisation
-- Update `<Your Brand Here>` in copy, metadata, and visuals to match your brand.
-- Replace placeholder analytics hook in `components/AnalyticsPlaceholder.tsx` with your provider snippet.
-- Connect newsletter form and contact form to your backend or third-party service.
-- Swap OG image URLs in `app/layout.tsx` with your generated artwork.
+- Swap the placeholder analytics hook in `components/AnalyticsPlaceholder.tsx` with your provider snippet.
+- Connect the newsletter form and contact form to your preferred email/CRM service.
+- Update Open Graph image URLs in `app/layout.tsx` once your brand artwork is ready.
+- Adjust theme colours by editing the CSS variables in `app/globals.css`.
 
 ## 📚 Content references
 References live under **About → References**. Update `data/references.ts` with your preferred bibliography in APA format.
