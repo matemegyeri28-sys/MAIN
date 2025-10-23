@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "module": "dist/index.mjs",
   "type": "module",
   "scripts": {
-    "build": "tsup src/index.ts --dts --format cjs,esm --out-dir dist",
-    "dev": "tsup src/index.ts --watch",
+    "build": "tsup src/index.ts --dts --format esm --out-dir dist",
+    "dev": "tsup src/index.ts --watch --format esm --out-dir dist",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "vitest",
     "format": "prettier --write 'src/**/*.{ts,tsx}'"

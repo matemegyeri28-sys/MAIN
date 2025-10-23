@@ -6,11 +6,8 @@
     "types": ["node"],
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "target": "ES2021"
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "target": "ES2021",
+    "lib": ["ES2021", "DOM"]
   },
   "include": ["src", "prisma"],
   "exclude": ["node_modules"]
