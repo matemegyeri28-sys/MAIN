@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-brand-dark font-body antialiased;
+}
+
+a {
+  @apply text-brand hover:text-accent transition-colors duration-200;
+}
+
+.gradient-border {
+  background: linear-gradient(120deg, rgba(35, 88, 122, 0.9), rgba(255, 126, 107, 0.8));
+}
+
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent;
+}
+
+.card {
+  @apply rounded-2xl border border-brand-light/40 bg-white/90 backdrop-blur shadow-soft transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.key-takeaway {
+  @apply rounded-xl bg-brand-light/60 p-6 text-brand-dark shadow-inner;
+}
+
+.callout {
+  @apply border-l-4 border-brand pl-4 italic text-muted;
+}
+
+button:focus-visible,
+[role='button']:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply focus-ring;
+}
+
+::selection {
+  background: rgba(255, 126, 107, 0.35);
+}
