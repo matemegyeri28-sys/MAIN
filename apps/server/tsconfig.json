@@ -1,13 +1,21 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@main/shared/*": ["../shared/src/*"]
+    },
+    "resolveJsonModule": true,
+    "sourceMap": true,
     "types": ["node"],
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
-    "target": "ES2021",
-    "lib": ["ES2021", "DOM"]
+    "lib": ["ES2020", "DOM"]
   },
   "include": ["src", "prisma"],
   "exclude": ["node_modules"]
