@@ -2,8 +2,9 @@
   "name": "@main/shared",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./src/index.ts",
   "type": "module",
+  "exports": "./src/index.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm --out-dir dist",
     "dev": "tsup src/index.ts --watch --format esm --out-dir dist",

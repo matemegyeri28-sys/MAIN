@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./src/index.ts",
+  "exports": "./src/index.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm --out-dir dist",
     "dev": "tsup src/index.ts --watch --format esm --out-dir dist",
