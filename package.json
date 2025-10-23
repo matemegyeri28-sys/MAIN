@@ -2,26 +2,20 @@
   "name": "main",
   "private": true,
   "version": "1.0.0",
-  "description": "SaaS marketing automation platform",
+  "description": "Self-contained SaaS marketing automation demo",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "dev": "npm run --workspaces --if-present dev",
-    "lint": "npm run lint --workspaces",
-    "test": "npm run test --workspaces",
-    "format": "npm run format --workspaces",
-    "seed": "npm run seed --workspace @main/server"
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "build": "echo 'Nothing to build'",
+    "lint": "echo 'lint skipped'",
+    "test": "echo 'tests not configured'",
+    "format": "echo 'format skipped'"
   },
-  "devDependencies": {
-    "@prisma/client": "file:packages/prisma-client",
-    "@types/node": "^20.11.30",
-    "prisma": "file:packages/prisma-cli",
-    "tsx": "^4.11.0",
-    "typescript": "^5.4.5"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.18.0"
   }

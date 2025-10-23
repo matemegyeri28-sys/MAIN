@@ -1,9 +1,0 @@
-{
-  "name": "prisma",
-  "version": "0.0.0-local",
-  "private": true,
-  "type": "module",
-  "bin": {
-    "prisma": "bin/prisma.js"
-  }
-}

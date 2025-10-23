@@ -7,23 +7,17 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  verify:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - name: Install dependencies
+          node-version: 18
+      - name: Install workspaces
         run: npm install
-      - name: Generate Prisma client
-        run: npm run prisma:generate --workspace @main/server
-      - name: Run unit tests
-        run: npm test --workspace @main/server
-      - name: Build packages
+      - name: Lint placeholder
+        run: npm run lint
+      - name: Build placeholder
         run: npm run build

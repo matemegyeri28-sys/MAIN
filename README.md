@@ -1,85 +1,101 @@
-# Aurora Automate
+# Marketing Automation Demo
 
-Aurora Automate is a SaaS marketing automation platform that extracts insights from any URL, synthesizes AI-powered advertisements, and publishes the creatives across your connected social channels. The project ships as a full-stack monorepo with a premium Next.js experience, Express + Prisma API, subscriptions, observability, and documentation.
+This repository hosts a self-contained SaaS-style demo that showcases the full pipeline of:
 
-## Features
+1. Extracting content from any public URL,
+2. Generating channel-specific advertisement creatives,
+3. Scheduling the generated creatives for automatic publishing across multiple social networks.
 
-- **URL content extraction** with text, image, and metadata capture.
-- **AI creative generation** (text, image, video storyboards) using deterministic templates that can be swapped with OpenAI or other providers.
-- **Automated scheduling** to multiple social networks with plan-based quota enforcement.
-- **Subscription-ready** data model supporting trialing, active, past-due, and canceled states.
-- **Premium UI/UX** with marketing site, dashboard, dark mode, and real-time pipeline visuals.
-- **Observability built-in** via Prometheus metrics (`/metrics`) and health checks.
-- **Seed data** for instant exploration of campaigns, creatives, and scheduled posts.
+The implementation intentionally avoids third-party npm dependencies so it can run in restricted environments without internet package access.
 
-## Repository structure
+## Project layout
 
 ```
 .
 ├── apps
-│   ├── server   # Express API, Prisma ORM, background jobs
-│   └── web      # Next.js 14 App Router frontend
-├── packages     # Shared config, observability, and domain schemas
-├── docs         # Architecture, deployment, observability guides
-└── .github      # CI workflow
+│   ├── server   # ESM HTTP API built on Node.js core modules
+│   └── web      # Static UI + lightweight dev server
+├── packages
+│   └── shared   # Shared content parsing + creative generation utilities
+├── scripts
+│   └── dev.mjs  # Helper that boots both workspaces together
+└── README.md
 ```
 
-## Quickstart
+## Prerequisites
 
-1. **Install dependencies**
+- Node.js 18.18 or later (provides the built-in `fetch` API and experimental `--watch` flag)
 
-   ```bash
-   npm install
-   ```
+## Installation
 
-   > If your environment blocks the npm registry, use an internal mirror or install dependencies manually.
+No external packages are required. From the repository root run:
 
-2. **Configure environment**
+```
+npm install
+```
 
-   Copy `.env.example` (create from snippet below) into `apps/server/.env`.
+This will simply register the workspaces so local `npm run` commands operate correctly.
 
-   ```
-   DATABASE_URL="file:./dev.db"
-   PORT=4000
-   FRONTEND_URL="http://localhost:3000"
-   SESSION_SECRET="change-me"
-   RESCRAPE_INTERVAL_MINUTES=720
-   ```
+## Running the stack
 
-3. **Generate Prisma client & database**
+Open two terminals or rely on the helper script:
 
-   ```bash
-   npm run prisma:generate --workspace @main/server
-   npm run prisma:migrate --workspace @main/server
-   npm run seed
-   ```
+```
+npm run dev
+```
 
-4. **Start services**
+The helper spawns the following processes:
 
-   ```bash
-   npm run dev --workspace @main/server
-   npm run dev --workspace @main/web
-   ```
+- `@main/server`: REST API available at <http://localhost:4000>
+- `@main/web`: Static UI dev server at <http://localhost:3000>
 
-5. Visit `http://localhost:3000` to explore the marketing site and signed-in workspace dashboard (seed data uses headers `x-user-id: seed-user`, `x-workspace-id: seed-workspace`).
+### Manual workspace commands
 
-## Testing
+```
+# API
+npm run -w @main/server dev
 
-- Backend unit tests: `npm test --workspace @main/server`
-- Frontend Playwright smoke tests placeholder: `npm test --workspace @main/web`
+# Web UI
+npm run -w @main/web dev
+```
 
-> Running tests requires dependencies to be installed. In restricted environments, document skipped steps in your CI logs.
+Stop the processes with `Ctrl+C`.
 
-## Documentation
+## API Overview
 
-- [Architecture](./docs/ARCHITECTURE.md)
-- [Deployment](./docs/DEPLOYMENT.md)
-- [Observability](./docs/OBSERVABILITY.md)
+### `POST /api/campaigns`
 
-## Monitoring
+```json
+{
+  "url": "https://example.com",
+  "name": "Optional custom campaign name",
+  "platforms": ["facebook", "instagram", "linkedin"]
+}
+```
 
-- `GET /health` – health check
-- `GET /metrics` – Prometheus metrics (`http_request_duration_seconds`, `background_job_duration_seconds`, `scheduled_posts_total`)
+Response includes the generated creatives and posting schedule.
+
+### `GET /api/campaigns`
+
+Returns every campaign, creative, and scheduled slot stored in memory along with summarized metrics.
+
+### `POST /api/creatives/preview`
+
+Accepts raw text and produces platform variations + a suggested schedule without storing anything.
+
+## Front-end walkthrough
+
+Visit <http://localhost:3000> to access the dashboard:
+
+- Submit a URL and pick social platforms to generate a full campaign.
+- Review creatives tailored per platform with quick keyword highlights.
+- Inspect the automated posting cadence spaced out every six hours.
+
+The UI communicates with the API using simple `fetch` calls, so it can be adapted to other front-end stacks easily.
+
+## Data persistence
+
+All information lives in-memory to keep the demo portable. Restarting the API clears the workspace. The architecture is modular so storage can be swapped for a database in more advanced deployments.
 
 ## License
 

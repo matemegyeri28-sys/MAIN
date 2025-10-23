@@ -1,23 +1,8 @@
 {
   "name": "@main/shared",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "./src/index.ts",
+  "private": true,
   "type": "module",
-  "exports": "./src/index.ts",
-  "scripts": {
-    "build": "tsup src/index.ts --dts --format esm --out-dir dist",
-    "dev": "tsup src/index.ts --watch --format esm --out-dir dist",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "test": "vitest",
-    "format": "prettier --write 'src/**/*.{ts,tsx}'"
-  },
-  "dependencies": {
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "tsup": "^8.0.1",
-    "typescript": "^5.4.5",
-    "vitest": "^1.5.0"
-  }
+  "main": "src/index.mjs",
+  "exports": "./src/index.mjs"
 }
