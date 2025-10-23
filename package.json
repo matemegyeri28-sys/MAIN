@@ -1,0 +1,22 @@
+{
+  "name": "main",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Self-contained SaaS marketing automation demo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "build": "echo 'Nothing to build'",
+    "lint": "echo 'lint skipped'",
+    "test": "echo 'tests not configured'",
+    "format": "echo 'format skipped'"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

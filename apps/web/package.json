@@ -1,0 +1,14 @@
+{
+  "name": "@main/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.mjs",
+    "start": "node src/server.mjs",
+    "build": "node src/build.mjs"
+  },
+  "dependencies": {
+    "@main/shared": "file:../../packages/shared"
+  }
+}

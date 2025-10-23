@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketing Automation Studio</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(145deg, #0b1220 0%, #10182c 40%, #f5f7ff 100%);
+        min-height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        color: #e8ecff;
+      }
+      main {
+        width: min(960px, 92vw);
+        background: rgba(12, 18, 32, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 48px;
+        margin: 40px 0;
+        box-shadow: 0 30px 80px rgba(8, 12, 24, 0.65);
+      }
+      h1 {
+        font-size: 2.6rem;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.04em;
+      }
+      p.lead {
+        color: rgba(232, 236, 255, 0.75);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+      form {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: rgba(232, 236, 255, 0.85);
+      }
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(149, 162, 255, 0.25);
+        background: rgba(18, 26, 46, 0.9);
+        color: #f5f7ff;
+        font-size: 1rem;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #7f8dff;
+        transform: translateY(-1px);
+      }
+      .platforms {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .platforms label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(20, 28, 48, 0.9);
+        border: 1px solid rgba(127, 141, 255, 0.35);
+        border-radius: 999px;
+        padding: 0.5rem 0.9rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .platforms input {
+        margin: 0;
+      }
+      button {
+        padding: 0.9rem 1.2rem;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(135deg, #7c5cff, #23a6d5);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 18px 40px rgba(124, 92, 255, 0.35);
+      }
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 24px 50px rgba(35, 166, 213, 0.35);
+      }
+      .grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      .card {
+        background: rgba(16, 23, 40, 0.95);
+        border-radius: 20px;
+        border: 1px solid rgba(127, 141, 255, 0.25);
+        padding: 1.5rem;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+      .card h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.2rem;
+      }
+      .card p {
+        margin: 0.4rem 0;
+        color: rgba(232, 236, 255, 0.75);
+      }
+      .schedule {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 1.2rem;
+      }
+      .schedule-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(20, 30, 52, 0.9);
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+        font-size: 0.95rem;
+      }
+      .badge {
+        background: rgba(124, 92, 255, 0.25);
+        padding: 0.3rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .summary {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      }
+      .summary-card {
+        flex: 1 1 200px;
+        background: rgba(16, 23, 40, 0.9);
+        padding: 1.2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(127, 141, 255, 0.25);
+      }
+      .summary-card h3 {
+        margin: 0 0 0.4rem;
+        color: rgba(232, 236, 255, 0.8);
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .summary-card strong {
+        font-size: 1.8rem;
+        display: block;
+      }
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        color: rgba(232, 236, 255, 0.5);
+        font-size: 0.85rem;
+      }
+      @media (max-width: 720px) {
+        main { padding: 32px; }
+        h1 { font-size: 2.2rem; }
+        .platforms { flex-direction: column; align-items: flex-start; }
+        .schedule-item { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Marketing Automation Studio</h1>
+        <p class="lead">Extract any landing page, generate tailored creatives for every channel, and schedule them in a single flow.</p>
+      </header>
+      <section class="summary" id="summary"></section>
+      <form id="campaign-form">
+        <div>
+          <label for="url">Source URL</label>
+          <input id="url" type="text" placeholder="https://example.com" required />
+        </div>
+        <div>
+          <label>Target Platforms</label>
+          <div class="platforms" id="platforms">
+            <label><input type="checkbox" value="facebook" checked /> Facebook</label>
+            <label><input type="checkbox" value="instagram" checked /> Instagram</label>
+            <label><input type="checkbox" value="linkedin" /> LinkedIn</label>
+            <label><input type="checkbox" value="twitter" /> Twitter</label>
+            <label><input type="checkbox" value="tiktok" /> TikTok</label>
+          </div>
+        </div>
+        <button type="submit">Generate Campaign</button>
+      </form>
+      <section class="grid" id="results"></section>
+      <footer>
+        <p>Server must be running on <code>http://localhost:4000</code>. All data is stored in memory for fast iteration.</p>
+      </footer>
+    </main>
+    <script type="module">
+      const API = 'http://localhost:4000';
+      const summaryEl = document.getElementById('summary');
+      const form = document.getElementById('campaign-form');
+      const resultsEl = document.getElementById('results');
+
+      async function loadSummary() {
+        try {
+          const res = await fetch(`${API}/api/campaigns`);
+          if (!res.ok) throw new Error('Failed to load');
+          const data = await res.json();
+          renderSummary(data.summary);
+          renderCampaigns(data);
+        } catch (error) {
+          summaryEl.innerHTML = `<div class="summary-card"><h3>Status</h3><strong>Offline</strong><p>${error.message}</p></div>`;
+        }
+      }
+
+      function renderSummary(summary = { campaigns: 0, creatives: 0, upcomingPosts: 0, lastUpdated: '-' }) {
+        summaryEl.innerHTML = `
+          <div class="summary-card">
+            <h3>Campaigns</h3>
+            <strong>${summary.campaigns ?? 0}</strong>
+            <p>Total automated initiatives</p>
+          </div>
+          <div class="summary-card">
+            <h3>Creatives</h3>
+            <strong>${summary.creatives ?? 0}</strong>
+            <p>Channel-specific variants</p>
+          </div>
+          <div class="summary-card">
+            <h3>Scheduled</h3>
+            <strong>${summary.upcomingPosts ?? 0}</strong>
+            <p>Posts queued for publishing</p>
+          </div>
+          <div class="summary-card">
+            <h3>Last Update</h3>
+            <strong>${new Date(summary.lastUpdated ?? Date.now()).toLocaleTimeString()}</strong>
+            <p>Workspace heartbeat</p>
+          </div>
+        `;
+      }
+
+      function renderCampaigns(data) {
+        const grouped = new Map();
+        for (const creative of data.creatives ?? []) {
+          const bucket = grouped.get(creative.campaignId) ?? { creatives: [], schedule: [] };
+          bucket.creatives.push(creative);
+          grouped.set(creative.campaignId, bucket);
+        }
+        for (const slot of data.schedule ?? []) {
+          const bucket = grouped.get(slot.campaignId) ?? { creatives: [], schedule: [] };
+          bucket.schedule.push(slot);
+          grouped.set(slot.campaignId, bucket);
+        }
+        const cards = (data.campaigns ?? []).map((campaign) => {
+          const bucket = grouped.get(campaign.id) ?? { creatives: [], schedule: [] };
+          return campaignCard(campaign, bucket.creatives, bucket.schedule);
+        });
+        resultsEl.innerHTML = cards.join('');
+      }
+
+      function campaignCard(campaign, creatives, schedule) {
+        const creativeMarkup = creatives.map((creative) => `
+          <div class="card">
+            <span class="badge">${creative.platform.toUpperCase()}</span>
+            <h2>${creative.headline}</h2>
+            <p>${creative.description}</p>
+            ${creative.image ? `<p><a href="${creative.image}" target="_blank">Preview image</a></p>` : ''}
+            <p><small>Keywords: ${creative.keywords.join(', ')}</small></p>
+          </div>
+        `).join('');
+
+        const scheduleMarkup = schedule.map((slot) => `
+          <div class="schedule-item">
+            <span>${new Date(slot.scheduledFor).toLocaleString()}</span>
+            <span class="badge">${slot.platform.toUpperCase()}</span>
+          </div>
+        `).join('');
+
+        return `
+          <article class="grid">
+            <header>
+              <h2>${campaign.name}</h2>
+              <p class="lead">Source: <a href="${campaign.url}" target="_blank" rel="noopener noreferrer">${campaign.url}</a></p>
+            </header>
+            <div class="grid">${creativeMarkup}</div>
+            <section class="card">
+              <h2>Publishing Schedule</h2>
+              <div class="schedule">${scheduleMarkup}</div>
+            </section>
+          </article>
+        `;
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const urlInput = document.getElementById('url');
+        const platformChecks = Array.from(document.querySelectorAll('#platforms input:checked'));
+        const platforms = platformChecks.map((input) => input.value);
+        if (platforms.length === 0) {
+          alert('Pick at least one platform');
+          return;
+        }
+
+        const payload = { url: urlInput.value.trim(), platforms };
+        form.querySelector('button').disabled = true;
+        form.querySelector('button').textContent = 'Generating…';
+
+        try {
+          const res = await fetch(`${API}/api/campaigns`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+          await loadSummary();
+          form.reset();
+        } catch (error) {
+          alert(error.message);
+        } finally {
+          form.querySelector('button').disabled = false;
+          form.querySelector('button').textContent = 'Generate Campaign';
+        }
+      });
+
+      loadSummary();
+    </script>
+  </body>
+</html>
