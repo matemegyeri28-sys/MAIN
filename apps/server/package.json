@@ -1,0 +1,47 @@
+{
+  "name": "@main/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
+    "build": "tsup src/index.ts --out-dir dist --format esm,cjs --dts",
+    "start": "node dist/index.js",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "test": "vitest",
+    "seed": "ts-node --esm -r tsconfig-paths/register prisma/seed.ts",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@main/config": "file:../../packages/config",
+    "@main/observability": "file:../../packages/observability",
+    "@main/shared": "file:../../packages/shared",
+    "@prisma/client": "^5.13.0",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^7.1.0",
+    "jsdom": "^24.0.0",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.47.1",
+    "stripe": "^14.25.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.7",
+    "@types/node": "^20.11.30",
+    "@types/node-fetch": "^3.0.3",
+    "@types/uuid": "^9.0.7",
+    "prisma": "^5.13.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "ts-node-dev": "^2.0.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
+  }
+}

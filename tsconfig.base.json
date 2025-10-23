@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@main/shared/*": ["packages/shared/src/*"],
+      "@main/config": ["packages/config/src/index.ts"],
+      "@main/observability": ["packages/observability/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
