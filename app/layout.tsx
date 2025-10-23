@@ -65,10 +65,24 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
-      <body className="bg-white text-brand-dark">
+      <body className="relative min-h-screen overflow-x-hidden bg-transparent text-brand-dark">
+        <a
+          href="#main-content"
+          className="focus-ring absolute left-4 top-4 z-[60] -translate-y-20 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-brand-dark transition-transform focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="aurora floating-shape absolute -left-24 top-[-15%] h-[38rem] w-[38rem]" aria-hidden />
+          <div className="aurora floating-shape absolute bottom-[-25%] right-[-20%] h-[36rem] w-[36rem]" aria-hidden />
+          <div className="aurora floating-shape absolute left-1/2 top-[15%] h-[28rem] w-[28rem] -translate-x-1/2" aria-hidden />
+          <div className="grid-overlay absolute inset-0 opacity-[0.25]" aria-hidden />
+        </div>
         <AnalyticsPlaceholder />
         <Navbar />
-        <main className="min-h-screen pt-24 md:pt-28">{children}</main>
+        <main id="main-content" className="relative z-10 min-h-screen pt-28 md:pt-32">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

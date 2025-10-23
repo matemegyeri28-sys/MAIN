@@ -19,43 +19,60 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-brand-light/40">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/50 shadow-[0_15px_45px_rgba(10,16,26,0.08)] backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="flex items-center gap-2 text-lg font-semibold tracking-tight text-brand-dark focus-ring"
+          className="focus-ring group flex items-center gap-3 text-lg font-semibold tracking-tight text-brand-dark"
         >
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white shadow-soft">
-            <span className="text-base font-bold">NB</span>
+          <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-accent via-accent/70 to-emerald-300 text-white shadow-glow">
+            <span className="shine-line" aria-hidden />
+            <span className="font-display text-base font-bold">NB</span>
           </span>
-          <span className="font-display text-xl">&lt;Your Brand Here&gt;</span>
+          <span className="font-display text-xl md:text-2xl">
+            &lt;Your Brand Here&gt;
+          </span>
         </Link>
-        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-10 md:flex">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative text-sm font-semibold transition-colors focus-ring ${
-                  isActive ? 'text-brand' : 'text-muted hover:text-brand'
+                className={`relative text-sm font-semibold tracking-wide transition focus-ring ${
+                  isActive ? 'text-brand-dark' : 'text-muted hover:text-brand-dark'
                 }`}
               >
                 {link.label}
                 {isActive && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute -bottom-2 left-0 h-0.5 w-full bg-accent"
+                    className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-accent"
                   />
                 )}
               </Link>
             );
           })}
         </nav>
+        <div className="hidden items-center gap-3 md:flex">
+          <Link
+            href="/course"
+            className="focus-ring inline-flex items-center justify-center rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-brand-dark transition hover:border-accent hover:text-accent"
+          >
+            View course
+          </Link>
+          <Link
+            href="/contact"
+            className="focus-ring inline-flex items-center justify-center rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5"
+          >
+            Talk to us
+          </Link>
+        </div>
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-light text-brand md:hidden"
+          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-brand-dark md:hidden"
           aria-expanded={isOpen}
           aria-label="Toggle navigation menu"
         >
@@ -87,13 +104,15 @@ export function Navbar() {
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="md:hidden"
           >
-            <ul className="space-y-1 border-t border-brand-light/40 px-6 py-4 text-sm">
+            <ul className="space-y-1 border-t border-white/50 bg-white/70 px-6 py-4 text-sm backdrop-blur-2xl">
               {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`block rounded-lg px-3 py-2 font-medium focus-ring ${
-                      pathname === link.href ? 'bg-brand-light/60 text-brand-dark' : 'text-muted hover:bg-brand-light/40'
+                    className={`block rounded-xl px-3 py-3 font-medium focus-ring ${
+                      pathname === link.href
+                        ? 'bg-white/80 text-brand-dark shadow-soft'
+                        : 'text-muted hover:bg-white/80 hover:text-brand-dark'
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -101,6 +120,15 @@ export function Navbar() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/course"
+                  className="focus-ring mt-2 block rounded-xl bg-accent px-3 py-3 text-center text-sm font-semibold text-white shadow-glow"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Explore the course
+                </Link>
+              </li>
             </ul>
           </motion.nav>
         )}

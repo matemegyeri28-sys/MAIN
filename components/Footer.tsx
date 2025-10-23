@@ -34,35 +34,35 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-brand-light/40 bg-brand-dark text-brand-light">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-4">
-          <div>
-            <p className="font-display text-2xl font-semibold">&lt;Your Brand Here&gt;</p>
-            <p className="mt-4 text-sm text-brand-light/80">
+    <footer className="mt-28 bg-gradient-to-b from-transparent via-white/70 to-white/90">
+      <div className="mx-auto max-w-7xl px-6 py-20">
+        <div className="grid gap-12 rounded-[32px] border border-white/60 bg-white/70 p-10 shadow-soft backdrop-blur-2xl md:grid-cols-4">
+          <div className="space-y-6">
+            <p className="font-display text-2xl font-semibold text-brand-dark md:text-3xl">&lt;Your Brand Here&gt;</p>
+            <p className="text-sm text-brand-dark/70">
               Evidence-based guidance to help ambitious humans understand, regulate, and transform stress into sustainable
               momentum.
             </p>
-            <div className="mt-6 flex gap-4">
+            <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <Link
                   key={social.label}
                   href={social.href}
-                  className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:-translate-y-0.5 hover:border-white/40"
+                  className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/60 text-brand-dark transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
                 >
                   <span className="sr-only">{social.label}</span>
-                  <span aria-hidden className="text-lg">●</span>
+                  <span aria-hidden className="text-base font-semibold">●</span>
                 </Link>
               ))}
             </div>
           </div>
           {footerLinks.map((column) => (
-            <div key={column.heading}>
-              <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-light/70">{column.heading}</h3>
-              <ul className="mt-4 space-y-3 text-sm text-brand-light/80">
+            <div key={column.heading} className="space-y-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-dark/60">{column.heading}</h3>
+              <ul className="space-y-3 text-sm text-brand-dark/70">
                 {column.items.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="focus-ring hover:text-white">
+                    <Link href={item.href} className="focus-ring hover:text-brand-dark">
                       {item.label}
                     </Link>
                   </li>
@@ -71,16 +71,16 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-brand-light/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-4 text-xs text-brand-dark/60 md:flex-row md:items-center md:justify-between">
           <p>&copy; {new Date().getFullYear()} &lt;Your Brand Here&gt;. All rights reserved.</p>
           <div className="flex flex-wrap gap-4">
-            <Link href="#privacy" className="focus-ring hover:text-white">
+            <Link href="#privacy" className="focus-ring hover:text-brand-dark">
               Privacy & data use
             </Link>
-            <Link href="/contact" className="focus-ring hover:text-white">
+            <Link href="/contact" className="focus-ring hover:text-brand-dark">
               Support
             </Link>
-            <Link href="/about#references" className="focus-ring hover:text-white">
+            <Link href="/about#references" className="focus-ring hover:text-brand-dark">
               References
             </Link>
           </div>

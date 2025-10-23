@@ -14,41 +14,47 @@ export function NewsletterSignup() {
   };
 
   return (
-    <section id="newsletter" className="section-padding bg-brand-dark/95">
-      <div className="mx-auto flex max-w-5xl flex-col gap-8 rounded-3xl border border-white/20 bg-white/5 p-10 text-brand-light shadow-soft md:flex-row md:items-center md:justify-between">
-        <div className="md:max-w-xl">
-          <p className="font-display text-3xl font-semibold tracking-tight text-white">
-            Stay ahead of stress science.
-          </p>
-          <p className="mt-4 text-sm text-white/80">
-            Receive weekly deep dives, protocols, and course invites. Curated from our ScienceBase research vault—evidence-backed, no spam.
-          </p>
-        </div>
-        <form className="flex w-full flex-col gap-3 md:max-w-sm" onSubmit={handleSubmit}>
-          <label htmlFor="newsletter-email" className="sr-only">
-            Email address
-          </label>
-          <input
-            id="newsletter-email"
-            type="email"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@example.com"
-            className="focus-ring w-full rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/50"
-          />
-          <button
-            type="submit"
-            className="focus-ring inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/40 transition hover:-translate-y-0.5"
-          >
-            Join the newsletter
-          </button>
-          {status === 'success' && (
-            <p className="text-xs text-emerald-200" role="status">
-              You’re on the list! Check your inbox for a welcome note.
+    <section id="newsletter" className="section-padding">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] border border-white/70 bg-gradient-to-br from-white/90 via-white/70 to-white/60 p-12 shadow-soft backdrop-blur-2xl">
+        <div className="shine-line" aria-hidden />
+        <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+          <div className="space-y-6">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/60 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.4em] text-brand-dark/70">
+              ScienceBase digest
+            </span>
+            <p className="font-display text-3xl font-semibold tracking-tight text-brand-dark md:text-4xl">
+              Stay ahead of the neuroscience shaping stress mastery.
             </p>
-          )}
-        </form>
+            <p className="text-sm leading-relaxed text-brand-dark/70">
+              Receive weekly briefs curated from our ScienceBase research vault—protocol breakdowns, cohort stories, and early access to live lab drops. Evidence-backed, beautifully distilled.
+            </p>
+          </div>
+          <form className="flex w-full flex-col gap-4 md:max-w-md" onSubmit={handleSubmit}>
+            <label htmlFor="newsletter-email" className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-dark/60">
+              Email address
+            </label>
+            <input
+              id="newsletter-email"
+              type="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              className="focus-ring w-full rounded-2xl border border-white/70 bg-white/80 px-5 py-4 text-sm text-brand-dark placeholder:text-brand-dark/40"
+            />
+            <button
+              type="submit"
+              className="focus-ring inline-flex items-center justify-center rounded-2xl bg-accent px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-glow transition hover:-translate-y-0.5"
+            >
+              Join the newsletter
+            </button>
+            {status === 'success' && (
+              <p className="text-xs font-medium text-emerald-500" role="status">
+                You’re on the list! Check your inbox for a welcome note.
+              </p>
+            )}
+          </form>
+        </div>
       </div>
     </section>
   );
