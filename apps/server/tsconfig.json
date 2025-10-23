@@ -4,9 +4,13 @@
     "outDir": "dist",
     "rootDir": "src",
     "types": ["node"],
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "target": "ES2021"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": ["src", "prisma"],
   "exclude": ["node_modules"]
