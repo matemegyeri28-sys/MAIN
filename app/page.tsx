@@ -35,6 +35,21 @@ const howStressWorks = [
   }
 ];
 
+const scienceHighlights = [
+  {
+    heading: 'ScienceBase handbook',
+    copy: 'Each module includes APA-formatted references, effect sizes, and practical guardrails so you can brief teams with confidence.'
+  },
+  {
+    heading: 'Lab-validated tools',
+    copy: 'Interactive planners stem from protocols tested with founders, clinicians, and residents across 12-week cohorts.'
+  },
+  {
+    heading: 'Accessible storytelling',
+    copy: 'Cinematic visuals and analogies translate complex mechanisms into memorable narratives without diluting the science.'
+  }
+];
+
 export default function HomePage() {
   return (
     <div className="flex flex-col">
@@ -106,6 +121,19 @@ export default function HomePage() {
               <div key={benefit.title} className="card p-8">
                 <h3 className="font-display text-xl text-brand-dark">{benefit.title}</h3>
                 <p className="mt-3 text-sm text-muted">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-brand-light/30">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-6 md:grid-cols-3">
+            {scienceHighlights.map((item) => (
+              <div key={item.heading} className="rounded-3xl border border-brand-light/70 bg-white/80 p-6 shadow-soft/40">
+                <p className="text-xs uppercase tracking-widest text-brand">{item.heading}</p>
+                <p className="mt-3 text-sm text-muted">{item.copy}</p>
               </div>
             ))}
           </div>

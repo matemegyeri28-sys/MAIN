@@ -21,7 +21,7 @@ export function NewsletterSignup() {
             Stay ahead of stress science.
           </p>
           <p className="mt-4 text-sm text-white/80">
-            Receive weekly deep dives, protocols, and course invites. Evidence-backed, no spam.
+            Receive weekly deep dives, protocols, and course invites. Curated from our ScienceBase research vault—evidence-backed, no spam.
           </p>
         </div>
         <form className="flex w-full flex-col gap-3 md:max-w-sm" onSubmit={handleSubmit}>

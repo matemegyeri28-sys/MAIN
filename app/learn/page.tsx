@@ -6,6 +6,27 @@ import { articles, type Article } from '@/data/articles';
 const topics: Article['topic'][] = ['Neurobiology', 'Stress', 'Sleep', 'Habit', 'Breath'];
 const levels: Article['level'][] = ['Beginner', 'Intermediate', 'Advanced'];
 
+const studyTracks = [
+  {
+    title: 'Reset & recover',
+    summary: 'Stabilise sleep, breath, and baseline awareness before tackling heavier loads.',
+    idealFor: 'Beginners, founders coming back from burnout, healthcare professionals between rotations',
+    modules: ['Sleep Pressure, Adenosine, and Resetting the Loop', 'Why Breath Is the Fastest Lever on State', 'Light, Movement, and Reflection Stacks']
+  },
+  {
+    title: 'Peak performance with protection',
+    summary: 'Pair high-output weeks with deliberate recovery architecture to avoid allostatic overload.',
+    idealFor: 'Leaders scaling teams, creators in launch cycles, advanced learners with data trackers',
+    modules: ['Dopamine Cycles & Sustainable Motivation', 'Micro-Stress Dosing for Resilience', 'Building a Personal Resilience Dashboard']
+  },
+  {
+    title: 'Coach & clinician toolkit',
+    summary: 'Translate the science into client programmes and cross-disciplinary conversations.',
+    idealFor: 'Therapists, coaches, learning designers supporting groups or teams',
+    modules: ['Habit Plasticity: Training Your Autonomic Baseline', 'Somatic Tracking & Interoceptive Accuracy', 'The Cortisol Arc: Understanding Daily Peaks']
+  }
+];
+
 export default function LearnPage() {
   const [topic, setTopic] = useState<Article['topic'] | 'All'>('All');
   const [level, setLevel] = useState<Article['level'] | 'All'>('All');
@@ -87,6 +108,31 @@ export default function LearnPage() {
                 No articles match these filters yet. Try resetting your selection.
               </p>
             )}
+          </div>
+        </section>
+
+        <section className="section-padding">
+          <h2 className="font-display text-3xl text-brand-dark">Curated study tracks</h2>
+          <p className="mt-3 max-w-2xl text-sm text-muted">
+            Choose a playlist to match your current season. Each track pairs foundational primers with labs and key takeaways so you can act within 48 hours.
+          </p>
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+            {studyTracks.map((track) => (
+              <div key={track.title} className="card flex flex-col gap-4 p-6">
+                <div className="text-xs uppercase tracking-widest text-brand">{track.title}</div>
+                <p className="text-sm text-muted">{track.summary}</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-brand-dark/70">Ideal for</p>
+                <p className="text-sm text-muted">{track.idealFor}</p>
+                <div className="rounded-2xl border border-brand-light/70 bg-white/70 p-4">
+                  <p className="text-xs uppercase tracking-widest text-brand">Key lessons</p>
+                  <ul className="mt-2 space-y-2 text-sm text-muted">
+                    {track.modules.map((module) => (
+                      <li key={module}>• {module}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>

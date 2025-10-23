@@ -53,6 +53,30 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <section className="section-padding">
+          <h2 className="font-display text-3xl text-brand-dark">Our ScienceBase methodology</h2>
+          <div className="mt-6 grid gap-6 md:grid-cols-3">
+            <div className="card p-6">
+              <p className="text-xs uppercase tracking-widest text-brand">01 · Research synthesis</p>
+              <p className="mt-3 text-sm text-muted">
+                We review meta-analyses and landmark studies (McEwen, Arnsten, Sapolsky) to extract mechanisms, dose ranges, and contraindications.
+              </p>
+            </div>
+            <div className="card p-6">
+              <p className="text-xs uppercase tracking-widest text-brand">02 · Protocol design</p>
+              <p className="mt-3 text-sm text-muted">
+                Content designers translate science into stories, analogies, and rituals. Every module ships with checklists, scripts, and measurement templates.
+              </p>
+            </div>
+            <div className="card p-6">
+              <p className="text-xs uppercase tracking-widest text-brand">03 · Field testing</p>
+              <p className="mt-3 text-sm text-muted">
+                We pilot with cross-industry cohorts, gather qualitative + biometric data, and refine until results meet our effect-size benchmarks.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section id="references" className="section-padding">
           <h2 className="font-display text-3xl text-brand-dark">References</h2>
           <p className="mt-2 text-sm text-muted">Key sources informing our curriculum and tools.</p>

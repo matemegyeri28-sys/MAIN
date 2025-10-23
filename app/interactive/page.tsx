@@ -30,6 +30,31 @@ const stressQuestions = [
   }
 ] as const;
 
+const categoryRecommendations: Record<
+  (typeof stressQuestions)[number]['category'],
+  {
+    high: string;
+    medium: string;
+    low: string;
+  }
+> = {
+  Recovery: {
+    high: 'Recovery systems are robust. Continue pairing evening light reduction with slow exhale work to lock in Walker’s sleep hygiene findings.',
+    medium: 'Solid base, but extend nightly wind-down to 45 minutes with Kabat-Zinn inspired body scans twice a week.',
+    low: 'Prioritise sleep anchors, non-sleep deep rest, and parasympathetic breathwork (4-7-8) to raise vagal tone as recommended by Walker (2017).'
+  },
+  Load: {
+    high: 'Load is well-managed. Maintain your intentional dopamine budgeting so sympathetic bursts stay purposeful.',
+    medium: 'Notice afternoon dips and slot in 10-minute movement breaks to prevent the allostatic creep described by McEwen.',
+    low: 'Your system is taking on more than it can recover from. Cap high-intensity blocks at 90 minutes and follow with Huberman-style sunlight walks.'
+  },
+  Awareness: {
+    high: 'You detect signals early—keep journaling sensory cues so they remain actionable intel.',
+    medium: 'Build two daily interoceptive check-ins to sharpen body awareness, following Critchley & Harrison’s research on signal detection.',
+    low: 'Develop awareness capacity with short somatic tracking exercises after meetings; label breath, pulse, and muscle tension before shifting state.'
+  }
+};
+
 type StressResponse = Record<(typeof stressQuestions)[number]['id'], number>;
 
 type DopamineTask = {
@@ -40,10 +65,34 @@ type DopamineTask = {
 };
 
 const breathingPresets = [
-  { id: 'box', name: 'Box Breathing (4-4-4-4)', inhale: 4, hold: 4, exhale: 4, holdEnd: 4 },
-  { id: '478', name: '4-7-8 Reset', inhale: 4, hold: 7, exhale: 8, holdEnd: 0 },
-  { id: 'coherent', name: 'Coherent 5-5', inhale: 5, hold: 0, exhale: 5, holdEnd: 0 }
-];
+  {
+    id: 'box',
+    name: 'Box Breathing (4-4-4-4)',
+    inhale: 4,
+    hold: 4,
+    exhale: 4,
+    holdEnd: 4,
+    description: 'Navy-tested reset that balances sympathetic and parasympathetic tone for steady focus.'
+  },
+  {
+    id: '478',
+    name: '4-7-8 Reset',
+    inhale: 4,
+    hold: 7,
+    exhale: 8,
+    holdEnd: 0,
+    description: 'Extends the exhale to engage vagal pathways and accelerate downshifting before sleep.'
+  },
+  {
+    id: 'coherent',
+    name: 'Coherent 5-5',
+    inhale: 5,
+    hold: 0,
+    exhale: 5,
+    holdEnd: 0,
+    description: 'Smooth, even cadence shown to raise heart-rate variability and emotional regulation capacity.'
+  }
+] as const;
 
 export default function InteractivePage() {
   return (
@@ -52,8 +101,7 @@ export default function InteractivePage() {
         <header className="space-y-4">
           <h1 className="font-display text-4xl text-brand-dark">Interactive labs to translate insight into practice.</h1>
           <p className="text-base text-muted">
-            Use diagnostics, planners, and guided breathing to design your day around a healthy dopamine and cortisol rhythm. All
-            tools save locally so you can pick up where you left off.
+            Use diagnostics, planners, and guided breathing to design your day around healthy dopamine and cortisol rhythms. Each tool is rooted in peer-reviewed research and saves locally so you can iterate over time.
           </p>
         </header>
 
@@ -93,6 +141,16 @@ function StressSelfCheck() {
     }));
   }, [responses]);
 
+  const categoryInsights = useMemo(() => {
+    return categoryScores.map((entry) => {
+      const range = entry.score >= 4 ? 'high' : entry.score >= 3 ? 'medium' : 'low';
+      const guidance = categoryRecommendations[entry.category as keyof typeof categoryRecommendations][
+        range as 'high' | 'medium' | 'low'
+      ];
+      return { ...entry, guidance };
+    });
+  }, [categoryScores]);
+
   return (
     <section className="card space-y-6 p-8" aria-labelledby="stress-self-check-heading">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -101,7 +159,7 @@ function StressSelfCheck() {
             Stress Self-Check
           </h2>
           <p className="mt-2 text-sm text-muted">
-            Rate each item from 1 (rarely) to 5 (consistently). You’ll receive a profile with targeted recommendations.
+            Rate each item from 1 (rarely) to 5 (consistently). The prompts mirror validated autonomic check-ins so you receive a profile with targeted recommendations.
           </p>
         </div>
         <button
@@ -185,11 +243,17 @@ function StressSelfCheck() {
           </div>
           <div className="key-takeaway">
             <h3 className="font-display text-xl text-brand-dark">Recommendations</h3>
+            <p className="mt-2 text-xs uppercase tracking-widest text-brand-dark/70">Personalised guidance</p>
             <ul className="mt-3 space-y-3 text-sm text-brand-dark/90">
-              <li>• If Recovery is below 3, prioritise consistent sleep-wake anchors and 1 longer exhale protocol daily.</li>
-              <li>• If Load is high, insert 3 dopamine-neutral breaks (sunlight walk, water, no phone) between intense tasks.</li>
-              <li>• For Awareness growth, schedule 2-minute body scans after meetings to label state shifts.</li>
+              {categoryInsights.map((entry) => (
+                <li key={entry.category}>
+                  <span className="font-semibold text-brand-dark">{entry.category}:</span> {entry.guidance}
+                </li>
+              ))}
             </ul>
+            <p className="mt-4 text-xs text-brand-dark/70">
+              Revisit weekly—scores track how protocols from the course shift your autonomic balance over time.
+            </p>
           </div>
         </div>
       )}
@@ -219,6 +283,20 @@ function DopamineBudgetPlanner() {
       { effort: 0, reward: 0 }
     );
   }, [tasks]);
+
+  const budgetInsight = useMemo(() => {
+    if (tasks.length === 0) {
+      return 'Add three to five activities to reveal your effort/reward wave. Huberman & Gazzaley recommend alternating cognitive load with restorative rewards.';
+    }
+    const delta = totals.reward - totals.effort;
+    if (delta <= -3) {
+      return 'Effort outweighs reward. Insert dopamine-neutral breaks (sunlight walks, hydration, mindful breaths) to protect prefrontal performance (Arnsten, 2015).';
+    }
+    if (delta >= 3) {
+      return 'Rewards exceed effort. Keep novelty purposeful and plan one stretch task to stay engaged without overstimulation.';
+    }
+    return 'Great wave. Maintain 90-minute focus blocks followed by 10–15 minutes of recovery to respect ultradian rhythms.';
+  }, [tasks, totals]);
 
   return (
     <section className="card space-y-6 p-8" aria-labelledby="dopamine-planner-heading">
@@ -320,6 +398,7 @@ function DopamineBudgetPlanner() {
           <p className="mt-2 text-sm text-muted">
             Healthy plans oscillate between exertion and meaningful rewards. If effort dwarfs reward, you risk dopamine depletion.
           </p>
+          <p className="mt-3 text-xs text-brand-dark/70">{budgetInsight}</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex-1">
@@ -464,7 +543,7 @@ function BreathingCoach() {
             Breathing Coach
           </h2>
           <p className="mt-2 text-sm text-muted">
-            Follow the visual timer for box, 4-7-8, or coherent breathing. Use headphones for a deeper parasympathetic cue.
+            Follow the visual timer for box, 4-7-8, or coherent breathing. Evidence from Kabat-Zinn and HRV studies suggests daily practice expands vagal tone and emotional regulation.
           </p>
         </div>
         <label className="md:w-60">
@@ -480,6 +559,7 @@ function BreathingCoach() {
               </option>
             ))}
           </select>
+          <p className="mt-2 text-xs text-muted">{preset.description}</p>
         </label>
       </div>
 
