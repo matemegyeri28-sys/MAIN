@@ -2,7 +2,6 @@
   "name": "@main/server",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
@@ -10,7 +9,7 @@
     "start": "node dist/index.js",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "vitest",
-    "seed": "ts-node --esm -r tsconfig-paths/register prisma/seed.ts",
+    "seed": "ts-node -r tsconfig-paths/register prisma/seed.ts",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate"
   },
