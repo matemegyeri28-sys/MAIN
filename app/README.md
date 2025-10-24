@@ -1,51 +1,37 @@
 # Megyeri Attila Autokereskedése
 
-Luxus ihlette, interaktív autókereskedés webalkalmazás React, TailwindCSS, Framer Motion és shadcn/ui alapokon. A projekt bemutatja a „Megyeri Attila Autokereskedése” márkát modern, üvegfelületű (glassmorphism) megjelenéssel, sötét mód / világos mód váltással és részletes autóadatbázissal.
+Ez a projekt egy teljesen statikus, modern autókereskedés weboldal, amely offline futtatható – külső npm csomagok nélkül. A tartalom magyar nyelvű, a felület sötét módot használ alapértelmezetten, és tartalmaz minden szükséges információt: kiemelt autók, kereshető/rendezhető kínálat, részletes leírások, finanszírozási csomagok, vélemények és kapcsolatfelvételi űrlap.
 
 ## Fő funkciók
 
-- **Landing oldal** hero szekcióval, értékajánlatokkal, kiemelt modellekkel, ügyfélvéleményekkel.
-- **Kínálat** oldal teljes szűrő- és rendező rendszerrel (márka, ár, évjárat, üzemanyag, keresés, rendezés) és gyors előnézeti modállal.
-- **Autó adatlap** galériával, műszaki specifikációkkal, garanciainformációkkal és CTA gombokkal.
-- **Rólunk**, **Kapcsolat** (űrlap + beágyazott térkép) és **Finanszírozás** oldalak a bizalomépítéshez és szolgáltatások bemutatásához.
-- Sötét mód alapértelmezetten, világos módra váltható, animált navigáció, parallax hatások és prémium tipográfia.
+- **Reszponzív dizájn** üveg effektusokkal, modern tipográfiával.
+- **Kiemelt modellek** gyors megtekintéssel és részletes adatlappal.
+- **Inventory szűrés**: szöveges keresés, márka, üzemanyag, évjárat, ár intervallum és rendezési lehetőség.
+- **Autó adatlap** galériával, műszaki adatokkal, garancia információkkal.
+- **Finanszírozási csomagok** és ügyfélvélemények.
+- **Kapcsolat oldal** térképpel, validált kapcsolatfelvételi űrlappal.
+- **Világos/sötét mód váltó**, a választás helyben tárolódik.
 
-## Technológiai stack
+## Futtatás
 
-- [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [TailwindCSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) komponensek
-- [Framer Motion](https://www.framer.com/motion/) az animációkhoz
-- [lucide-react](https://lucide.dev/) ikonok
-
-## Fejlesztői parancsok
+A projekt nem igényel npm függőséget. A parancsok a Node.js beépített moduljaira támaszkodnak.
 
 ```bash
-# függőségek telepítése
 npm install
-
-# fejlesztői szerver indítása
 npm run dev
-
-# típusellenőrzés + build
-npm run build
-
-# előnézet
-npm run preview
 ```
 
-## Mappa-struktúra
+- `npm install`: nincs telepítendő csomag, azonnal lefut.
+- `npm run dev`: elindít egy egyszerű Node.js alapú statikus szervert a `http://localhost:4173` címen.
+- `npm run build`: elkészíti a `dist/` mappát (publikus és forrás fájlok másolása), amely más statikus szerverrel is kiszolgálható.
 
-```
-app/
-├── src/
-│   ├── components/        # Navigáció, kártyák, űrlapok, közös elemek
-│   ├── pages/             # Oldal komponensek (landing, inventory, stb.)
-│   ├── data/              # Demo autó adatbázis
-│   └── context/           # Téma kontextus (dark/light mód)
-├── public/
-├── index.html
-└── package.json
-```
+## Struktúra
 
-A `cars.ts` fájl valósághű mintaadatokat tartalmaz magyarországi árakkal (HUF), üzemanyag-típusokkal és felszereltséggel. A projekt könnyen bővíthető további modellekkel vagy backend integrációval.
+- `public/`: alap HTML és stílusok.
+- `src/`: moduláris JavaScript, adatok, komponensek.
+- `scripts/build.js`: egyszerű build script a `dist` könyvtár előállításához.
+- `server.js`: Node.js alapú statikus fájl szerver.
+
+## Böngésző támogatás
+
+A kód modern böngészőkre (Edge, Chrome, Firefox, Safari legújabb verziói) optimalizált és moduláris (ESM) JavaScriptet használ.
