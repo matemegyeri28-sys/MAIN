@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 45% 5%;
+  --foreground: 210 40% 98%;
+  --card: 220 45% 7%;
+  --card-foreground: 210 40% 98%;
+  --popover: 220 45% 7%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 222 89% 56%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217 30% 18%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 217 30% 22%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 340 82% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 63%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 32% 18%;
+  --input: 217 32% 18%;
+  --ring: 222 89% 56%;
+}
+
+.light {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 222 89% 56%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 20% 40%;
+  --accent: 340 82% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 63%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 222 89% 56%;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.15), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.08), transparent 35%),
+    linear-gradient(180deg, rgba(15, 23, 42, 1) 0%, rgba(8, 13, 23, 1) 100%);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.5);
+  border-radius: 9999px;
+}
+
+.glass-panel {
+  @apply bg-white/5 dark:bg-slate-900/60 backdrop-blur-lg border border-white/10 dark:border-white/5 shadow-glass;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply min-h-screen;
+  }
+}
