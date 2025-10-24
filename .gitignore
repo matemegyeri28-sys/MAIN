@@ -1,0 +1,11 @@
+.env
+backend/app.db
+__pycache__/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/tests/__pycache__/
+frontend/node_modules/
+frontend/.next/
+*.pyc
+npm-debug.log*
+.DS_Store
