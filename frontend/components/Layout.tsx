@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { AUTH_EVENT, AuthenticatedUser, clearAuth, getStoredUser } from '../lib/auth';
 import ThemeToggle from './ThemeToggle';
 
 interface LayoutProps {
@@ -14,6 +16,25 @@ export default function Layout({
   description = 'AI-native marketing automation platform',
   children
 }: LayoutProps) {
+  const router = useRouter();
+  const [user, setUser] = useState<AuthenticatedUser | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const syncUser = () => {
+      setUser(getStoredUser());
+    };
+    syncUser();
+    window.addEventListener(AUTH_EVENT, syncUser);
+    return () => window.removeEventListener(AUTH_EVENT, syncUser);
+  }, []);
+
+  const handleSignOut = () => {
+    clearAuth();
+    setUser(null);
+    router.push('/login');
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
       <Head>
@@ -34,6 +55,23 @@ export default function Layout({
             <Link href="/dashboard" className="hover:text-primary-500">
               Dashboard
             </Link>
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="hidden text-xs font-medium uppercase tracking-wide text-slate-400 sm:inline">
+                  {user.full_name}
+                </span>
+                <button
+                  onClick={handleSignOut}
+                  className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 transition hover:border-primary-400 hover:text-primary-500 dark:border-slate-700 dark:text-slate-200"
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <Link href="/login" className="rounded-full border border-transparent px-3 py-1 text-xs font-semibold text-slate-700 transition hover:text-primary-500 dark:text-slate-200">
+                Sign in
+              </Link>
+            )}
             <ThemeToggle />
           </div>
         </div>

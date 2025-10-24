@@ -1,7 +1,16 @@
+from datetime import datetime, timedelta
+
 from sqlmodel import select
 
 from app.core.database import init_db, session_scope
-from app.models.models import ConnectedAccount, SubscriptionPlan, User
+from app.core.security import get_password_hash
+from app.models.models import (
+    ConnectedAccount,
+    Subscription,
+    SubscriptionPlan,
+    SubscriptionStatus,
+    User,
+)
 
 
 def seed() -> None:
@@ -9,9 +18,16 @@ def seed() -> None:
     with session_scope() as session:
         user = session.exec(select(User)).first()
         if not user:
-            user = User(email="founder@lumina.ai", full_name="Avery Stone", company="Lumina Labs")
+            user = User(
+                email="founder@lumina.ai",
+                full_name="Avery Stone",
+                company="Lumina Labs",
+                hashed_password=get_password_hash("demo1234"),
+            )
             session.add(user)
             session.flush()
+        elif not user.hashed_password:
+            user.hashed_password = get_password_hash("demo1234")
         if not session.exec(select(SubscriptionPlan)).first():
             plans = [
                 SubscriptionPlan(
@@ -50,6 +66,17 @@ def seed() -> None:
             ]
             for plan in plans:
                 session.add(plan)
+        plan = session.exec(select(SubscriptionPlan).order_by(SubscriptionPlan.price_monthly)).first()
+        if plan and not session.exec(select(Subscription).where(Subscription.user_id == user.id)).first():
+            trial_subscription = Subscription(
+                user_id=user.id,
+                plan_id=plan.id,
+                status=SubscriptionStatus.TRIALING,
+                started_at=datetime.utcnow(),
+                ends_at=datetime.utcnow() + timedelta(days=14),
+                auto_renew=False,
+            )
+            session.add(trial_subscription)
         if not session.exec(select(ConnectedAccount)).first():
             account = ConnectedAccount(
                 user_id=user.id,

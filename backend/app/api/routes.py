@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import select
 
 from app.api.deps import get_current_user
 from app.core.database import session_scope
+from app.core.security import create_access_token, get_password_hash, verify_password
 from app.models.models import (
     ConnectedAccount,
     ContentSource,
@@ -14,6 +16,7 @@ from app.models.models import (
     SubscriptionPlan,
     User,
 )
+from app.schemas.auth import TokenResponse, UserCreate, UserRead
 from app.schemas.common import (
     ConnectedAccountRead,
     ContentSourceRead,
@@ -36,6 +39,41 @@ from app.services.posting import SocialPoster
 from app.services.subscriptions import SubscriptionService
 
 router = APIRouter()
+
+
+@router.post("/auth/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+def register_user(payload: UserCreate):
+    with session_scope() as session:
+        existing = session.exec(select(User).where(User.email == payload.email.lower())).first()
+        if existing:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+
+        user = User(
+            email=payload.email.lower(),
+            full_name=payload.full_name.strip(),
+            company=payload.company.strip() if payload.company else None,
+            hashed_password=get_password_hash(payload.password),
+        )
+        session.add(user)
+        session.flush()
+        session.refresh(user)
+        return user
+
+
+@router.post("/auth/login", response_model=TokenResponse)
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    with session_scope() as session:
+        user = session.exec(select(User).where(User.email == form_data.username.lower())).first()
+        if not user or not verify_password(form_data.password, user.hashed_password):
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect email or password")
+
+    token = create_access_token(subject=user.id)
+    return TokenResponse(access_token=token, token_type="bearer", user=user)
+
+
+@router.get("/auth/me", response_model=UserRead)
+def read_current_user(user: User = Depends(get_current_user)):
+    return user
 
 
 @router.post("/sources", response_model=ContentSourceRead)
@@ -81,6 +119,7 @@ def add_connected_account(payload: ConnectedAccountCreateRequest, user: User = D
             access_token=payload.access_token,
             account_handle=payload.account_handle,
             profile_metadata=payload.profile_metadata,
+            active=True,
         )
         session.add(account)
         session.flush()
@@ -136,7 +175,10 @@ def list_plans():
 @router.post("/subscriptions", response_model=SubscriptionRead)
 def create_subscription(payload: SubscriptionCreateRequest, user: User = Depends(get_current_user)):
     service = SubscriptionService(user_id=user.id)
-    subscription = service.create_subscription(plan_id=payload.plan_id, auto_renew=payload.auto_renew)
+    try:
+        subscription = service.create_subscription(plan_id=payload.plan_id, auto_renew=payload.auto_renew)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
     return subscription
 
 

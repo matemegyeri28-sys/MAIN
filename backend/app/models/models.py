@@ -23,7 +23,7 @@ class User(SQLModel, table=True):
     email: str = Field(index=True, unique=True)
     full_name: str
     company: Optional[str] = None
-    hashed_password: Optional[str] = None
+    hashed_password: str = Field(nullable=False)
 
     subscriptions: List["Subscription"] = Relationship(back_populates="user")
     accounts: List["ConnectedAccount"] = Relationship(back_populates="user")

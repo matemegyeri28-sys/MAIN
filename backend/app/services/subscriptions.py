@@ -19,17 +19,32 @@ class SubscriptionService:
             plan = session.get(SubscriptionPlan, plan_id)
             if not plan:
                 raise ValueError("Plan not found")
+
+            active_subscriptions = session.exec(
+                select(Subscription)
+                .where(Subscription.user_id == self.user_id)
+                .where(Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING]))
+            ).all()
+            for subscription in active_subscriptions:
+                subscription.status = SubscriptionStatus.CANCELED
+                subscription.ends_at = datetime.utcnow()
+                subscription.auto_renew = False
+
+            status = SubscriptionStatus.ACTIVE if auto_renew else SubscriptionStatus.TRIALING
+            ends_at = None if status == SubscriptionStatus.ACTIVE else datetime.utcnow() + timedelta(days=self.TRIAL_DAYS)
+
             subscription = Subscription(
                 user_id=self.user_id,
                 plan_id=plan_id,
-                status=SubscriptionStatus.TRIALING,
+                status=status,
                 started_at=datetime.utcnow(),
-                ends_at=datetime.utcnow() + timedelta(days=self.TRIAL_DAYS),
+                ends_at=ends_at,
                 auto_renew=auto_renew,
             )
             session.add(subscription)
             session.flush()
             session.refresh(subscription)
+            subscription.plan  # ensure relationship is loaded before session closes
             return subscription
 
     def get_active_subscription(self) -> Subscription | None:
@@ -40,4 +55,7 @@ class SubscriptionService:
                 .where(Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING]))
                 .order_by(Subscription.started_at.desc())
             )
-            return session.exec(stmt).first()
+            subscription = session.exec(stmt).first()
+            if subscription:
+                subscription.plan
+            return subscription

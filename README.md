@@ -6,8 +6,10 @@ Lumina Automate is a SaaS marketing automation platform that ingests content fro
 
 - **Content ingestion** – Extracts text, imagery, and metadata from target URLs to build reusable content sources.
 - **AI-inspired creative generation** – Produces text, image prompt, and video script creatives using a deterministic mock AI engine.
+- **Secure workspace authentication** – Email/password registration and JWT-powered login with session persistence.
 - **Automated publishing** – Schedules creatives across connected social accounts through background jobs with delivery tracking.
 - **Subscription model** – Includes tiered subscription plans, trial management, and simulated billing hooks.
+- **Connected account management** – Add and monitor social connectors directly from the dashboard.
 - **Premium UI** – Dark mode, gradient hero sections, and interactive dashboards built with Next.js, Tailwind CSS, and Headless UI.
 - **Operations ready** – Docker Compose stack, GitHub Actions CI, Prometheus metrics endpoint, and seeding utilities.
 
@@ -61,7 +63,12 @@ In a separate shell execute:
 docker compose exec backend python -m scripts.seed_data
 ```
 
-This provisions a demo workspace, subscription plans, and a placeholder social account.
+This provisions a demo workspace, subscription plans, and a placeholder social account. The seeded user can be accessed with:
+
+- **Email:** `founder@lumina.ai`
+- **Password:** `demo1234`
+
+Visit [http://localhost:3000/login](http://localhost:3000/login) to sign in with the demo credentials or create a brand-new workspace. After authentication the dashboard exposes subscription controls, connected account management, and creative generation.
 
 ### 4. Run tests locally
 

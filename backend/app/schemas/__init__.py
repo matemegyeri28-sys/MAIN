@@ -1,3 +1,4 @@
+from .auth import TokenResponse, UserCreate, UserRead
 from .common import (
     ConnectedAccountRead,
     ContentSourceRead,
@@ -23,6 +24,9 @@ __all__ = [
     "PostJobRead",
     "SubscriptionPlanRead",
     "SubscriptionRead",
+    "TokenResponse",
+    "UserCreate",
+    "UserRead",
     "ConnectedAccountCreateRequest",
     "CreativeGenerateRequest",
     "PostingRequest",
