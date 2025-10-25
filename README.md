@@ -70,6 +70,8 @@ This provisions a demo workspace, subscription plans, and a placeholder social a
 
 Visit [http://localhost:3000/login](http://localhost:3000/login) to sign in with the demo credentials or create a brand-new workspace. After authentication the dashboard exposes subscription controls, connected account management, and creative generation.
 
+> **Note:** The backend automatically allows requests from `http://localhost:3000` and `http://127.0.0.1:3000`. For other origins set `ALLOWED_ORIGINS` in `.env` to a comma-separated list of URLs.
+
 ### 4. Run tests locally
 
 ```bash
