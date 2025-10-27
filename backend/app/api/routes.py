@@ -93,7 +93,11 @@ def list_sources(user: User = Depends(get_current_user)):
 @router.post("/creatives", response_model=list[CreativeAssetRead])
 def generate_creatives(payload: CreativeGenerateRequest, user: User = Depends(get_current_user)):
     with session_scope() as session:
-        source = session.get(ContentSource, payload.source_id)
+        source = session.exec(
+            select(ContentSource)
+            .where(ContentSource.id == payload.source_id)
+            .where(ContentSource.user_id == user.id)
+        ).first()
         if not source:
             raise HTTPException(status_code=404, detail="Source not found")
     generator = AdGenerator(user_id=user.id)
@@ -144,6 +148,8 @@ def schedule_posting(
         creative = session.get(CreativeAsset, payload.creative_id)
         if not creative:
             raise HTTPException(status_code=404, detail="Creative not found")
+        if creative.user_id != user.id:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Creative not authorized")
         account_stmt = select(ConnectedAccount).where(ConnectedAccount.user_id == user.id).where(
             ConnectedAccount.id.in_(payload.account_ids)
         )
